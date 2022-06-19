@@ -3,18 +3,20 @@ $fn = 64;
 include <MCAD/regular_shapes.scad>
 
 
-inner_diameter = 68;
-cup_heigth = 45;
-wall_height = 55;
+inner_diameter = 69.5;
+cup_heigth = 40;
+wall_height = 50;
 
 hole_heigth = 20;
-wall_thickness = 3;
-screw_diameter = 4.8;
+wall_thickness = 2.8;
+
+screw_diameter = 4.7;
+screw_offset = 7.5;
 
 //merge the holders
 plate_width = inner_diameter + wall_thickness * 1.5;
 
-for (i = [0 : 1 : 4]){    
+for (i = [0 : 1 : 0]) {
     translate([0, i*plate_width, 0])
     complete();
 }
@@ -43,11 +45,11 @@ module wall_mount() {
         cube([inner_diameter + wall_thickness*2, wall_thickness, wall_height]);
 
         //holes for screws
-        translate([plate_width-7, -1, wall_height-7])
+        translate([plate_width-screw_offset, -1, wall_height-screw_offset])
         rotate([-90,0,0])
         cylinder(wall_thickness+2, d = screw_diameter);
             
-        translate([7, -1, wall_height-7])
+        translate([screw_offset, -1, wall_height-screw_offset])
         rotate([-90,0,0])
         cylinder(wall_thickness+2,d = screw_diameter);        
     }
