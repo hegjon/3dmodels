@@ -29,6 +29,7 @@ module complete() {
     wall_mount();
 
     extra();
+    extra2();
 }
 
 
@@ -63,6 +64,9 @@ module extra() {
     cube([wall_thickness, wall_thickness*2, cup_heigth]);
 
     translate([inner_diameter/2 - wall_thickness, -wall_thickness*7.13, 0])
-    cube([wall_thickness, wall_thickness*2, cup_heigth]);
-    
+    cube([wall_thickness, wall_thickness*2, cup_heigth]); 
+}
+
+module extra2() {
+        cylinder_tube(wall_thickness+1, inner_diameter/2, 1);
 }
