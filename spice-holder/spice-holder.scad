@@ -8,16 +8,18 @@ cup_heigth = 40;
 wall_height = 50;
 
 hole_heigth = 20;
-wall_thickness = 2.45;
+wall_thickness = 2.35;
 bottom_thickness = wall_thickness * 1.1;
 
 screw_diameter = 4.65;
 screw_offset = 7.1;
 
-//merge the holders
-plate_width = inner_diameter + wall_thickness * 1.75;
+lip_degree = 35;
 
-for (i = [0 : 1 : 0]) {
+//merge the holders
+plate_width = inner_diameter + wall_thickness * 1.1;
+
+for (i = [0 : 1 : 1]) {
     translate([0, i*plate_width, 0])
     complete();
 }
@@ -42,8 +44,8 @@ module holder() {
         cylinder_tube(cup_heigth, inner_diameter/2 + wall_thickness, wall_thickness);
         
         // "lip"
-        translate([-57, 0, cup_heigth*1.6])
-        rotate([0, -30, 0])
+        translate([-50, 0, cup_heigth*1.6])
+        rotate([0, -lip_degree, 0])
         cube(plate_width, center = true);
     }
 }
@@ -72,5 +74,11 @@ module extra() {
 }
 
 module extra2() {
+    difference() {
         cylinder_tube(bottom_thickness+2, inner_diameter/2, 2);
+        
+        translate([0, 0, 0])
+        cylinder(h = bottom_thickness+3, r1 = inner_diameter/2 - 4, r2 = inner_diameter/2 +1, center = false);
+    }
+        
 }
