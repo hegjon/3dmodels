@@ -1,4 +1,4 @@
-$fn = 360;
+$fn = 128;
 
 include <MCAD/regular_shapes.scad>
 
@@ -8,16 +8,16 @@ cup_heigth = 40;
 wall_height = 50;
 
 hole_heigth = 20;
-wall_thickness = 2.35;
-bottom_thickness = wall_thickness * 1.1;
+wall_thickness = 2.15;
+bottom_thickness = wall_thickness * 1.02;
 
 screw_diameter = 4.65;
-screw_offset = 7.1;
+screw_offset = 6.7;
 
 lip_degree = 35;
 
 //merge the holders
-plate_width = inner_diameter + wall_thickness * 1.1;
+plate_width = inner_diameter + wall_thickness * 1.05;
 
 for (i = [0 : 1 : 1]) {
     translate([0, i*plate_width, 0])
@@ -44,9 +44,9 @@ module holder() {
         cylinder_tube(cup_heigth, inner_diameter/2 + wall_thickness, wall_thickness);
         
         // "lip"
-        translate([-50, 0, cup_heigth*1.6])
+        translate([-38, -0, cup_heigth])
         rotate([0, -lip_degree, 0])
-        cube(plate_width, center = true);
+        cube([plate_width*2, plate_width*2, plate_width/2], center = true);
     }
 }
 
@@ -66,10 +66,10 @@ module wall_mount() {
 }
 
 module extra() {
-    translate([inner_diameter/2 - wall_thickness, inner_diameter/5.2, 0])
+    translate([inner_diameter/2 - wall_thickness, inner_diameter/5.40, 0])
     cube([wall_thickness*2, wall_thickness*1.5, cup_heigth]);
 
-    translate([inner_diameter/2 - wall_thickness, -wall_thickness*6.83, 0])
+    translate([inner_diameter/2 - wall_thickness, -wall_thickness*6.96, 0])
     cube([wall_thickness*2, wall_thickness*1.5, cup_heigth]); 
 }
 
