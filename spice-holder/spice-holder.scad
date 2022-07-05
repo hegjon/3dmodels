@@ -74,11 +74,5 @@ module extra() {
 }
 
 module extra2() {
-    difference() {
-        cylinder_tube(bottom_thickness+2, inner_diameter/2, 2);
-        
-        translate([0, 0, 0])
-        cylinder(h = bottom_thickness+3, r1 = inner_diameter/2 - 4, r2 = inner_diameter/2 +1, center = false);
-    }
-        
+    cylinder_tube(bottom_thickness+2, inner_diameter/2, 2);
 }
