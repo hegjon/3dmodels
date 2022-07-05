@@ -66,7 +66,7 @@ module wall_mount() {
 }
 
 module extra() {
-    translate([inner_diameter/2 - wall_thickness, inner_diameter/5.40, 0])
+    translate([inner_diameter/2 - wall_thickness, inner_diameter/5.61, 0])
     cube([wall_thickness*2, wall_thickness*1.5, cup_heigth]);
 
     translate([inner_diameter/2 - wall_thickness, -wall_thickness*6.96, 0])
