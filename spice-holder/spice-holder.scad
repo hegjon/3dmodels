@@ -8,8 +8,8 @@ cup_heigth = 40;
 wall_height = 50;
 
 hole_heigth = 20;
-wall_thickness = 2.15;
-bottom_thickness = wall_thickness * 1.02;
+wall_thickness = 1.95;
+bottom_thickness = wall_thickness;
 
 screw_diameter = 4.65;
 screw_offset = 6.7;
@@ -31,7 +31,7 @@ module complete() {
     rotate([0,0,90])
     wall_mount();
 
-    extra();
+//    extra();
     extra2();
 }
 
@@ -44,7 +44,7 @@ module holder() {
         cylinder_tube(cup_heigth, inner_diameter/2 + wall_thickness, wall_thickness);
         
         // "lip"
-        translate([-38, -0, cup_heigth])
+        translate([-46, -0, cup_heigth])
         rotate([0, -lip_degree, 0])
         cube([plate_width*2, plate_width*2, plate_width/2], center = true);
     }
