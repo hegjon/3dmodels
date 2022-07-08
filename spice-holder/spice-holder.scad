@@ -3,7 +3,7 @@ $fn = 128;
 include <MCAD/regular_shapes.scad>
 
 
-inner_diameter = 68.92;
+inner_diameter = 69.05;
 cup_heigth = 40;
 wall_height = 50;
 
@@ -19,7 +19,7 @@ lip_degree = 33;
 //merge the holders
 plate_width = inner_diameter + wall_thickness * 1.02;
 
-for (i = [0 : 1 : 1]) {
+for (i = [0 : 1 : 2]) {
     translate([0, i*plate_width, 0])
     complete();
 }
