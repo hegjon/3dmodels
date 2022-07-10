@@ -2,10 +2,10 @@ $fn = 360;
 
 include <BOSL2/std.scad>
 
-number_of_cups = 2;
+number_of_cups = 5;
 
-inner_diameter = 69.0;
-cup_heigth = 40;
+inner_diameter = 68.8;
+cup_heigth = 41;
 wall_height = 50;
 
 mount_thickness = 1.75; //5*0.35
@@ -15,11 +15,11 @@ bottom_thickness = mount_thickness;
 screw_diameter = 4.65;
 screw_offset = 6.7;
 
-lip_degree = 33;
+lip_degree = 30;
 
 //private variables
 //merge the holders
-plate_width = inner_diameter + cup_thickness * 1.01;
+plate_width = inner_diameter + cup_thickness;
 total_width = plate_width*number_of_cups;
 
 xcopies(n=number_of_cups, spacing=plate_width) {
@@ -37,14 +37,15 @@ module wall_mount() {
         back(mount_thickness/2)
         up(wall_height-screw_offset)
         xcopies(n=2, l=total_width - screw_offset*2) {
-            ycyl(l=mount_thickness+2, d=screw_diameter);
+            ycyl(l=mount_thickness+0.1, d=screw_diameter);
         }
         
         //between cups
+        number_of_holes_in_middle = number_of_cups-1;
         back(mount_thickness/2)
         up(wall_height-screw_offset)
-        xcopies(n=number_of_cups-1, l=plate_width*(number_of_cups-2)) {
-            ycyl(l=mount_thickness+2, d=screw_diameter);
+        xcopies(n=number_of_holes_in_middle, l=plate_width*(number_of_cups-2)) {
+            ycyl(l=mount_thickness+0.1, d=screw_diameter);
         }        
      }
 }
@@ -57,7 +58,7 @@ module holder() {
         tube(h=cup_heigth, id=inner_diameter, wall=cup_thickness, anchor=BOTTOM);
         
         // "lip"
-        up(cup_heigth/8)
+        up(cup_heigth/6.6)
         right(inner_diameter/2)
         fwd(inner_diameter)
         rotate([0, -lip_degree, 90])
