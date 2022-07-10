@@ -1,69 +1,66 @@
-$fn = 128;
+$fn = 360;
 
-include <MCAD/regular_shapes.scad>
+include <BOSL2/std.scad>
 
+number_of_cups = 2;
 
-inner_diameter = 69.05;
+inner_diameter = 69.0;
 cup_heigth = 40;
 wall_height = 50;
 
-hole_heigth = 20;
-wall_thickness = 1.70;
-bottom_thickness = wall_thickness;
+mount_thickness = 1.75; //5*0.35
+cup_thickness = 1.40; //4*0.35
+bottom_thickness = mount_thickness;
 
 screw_diameter = 4.65;
 screw_offset = 6.7;
 
 lip_degree = 33;
 
+//private variables
 //merge the holders
-plate_width = inner_diameter + wall_thickness * 1.02;
+plate_width = inner_diameter + cup_thickness * 1.01;
+total_width = plate_width*number_of_cups;
 
-for (i = [0 : 1 : 2]) {
-    translate([0, i*plate_width, 0])
-    complete();
-}
-
-module complete() {
+xcopies(n=number_of_cups, spacing=plate_width) {
     holder();
-    
-    translate([inner_diameter/2 + wall_thickness, -(inner_diameter+wall_thickness*2)/2, 0])
-    rotate([0,0,90])
-    wall_mount();
-
-    //extra2();
 }
+wall_mount();
 
+module wall_mount() {
+     back(inner_diameter/2)
+     difference() {
+        left(total_width/2)
+        cube([total_width, mount_thickness, wall_height]);
+        
+        //corner holes
+        back(mount_thickness/2)
+        up(wall_height-screw_offset)
+        xcopies(n=2, l=total_width - screw_offset*2) {
+            ycyl(l=mount_thickness+2, d=screw_diameter);
+        }
+        
+        //between cups
+        back(mount_thickness/2)
+        up(wall_height-screw_offset)
+        xcopies(n=number_of_cups-1, l=plate_width*(number_of_cups-2)) {
+            ycyl(l=mount_thickness+2, d=screw_diameter);
+        }        
+     }
+}
 
 module holder() {
     //bottom
-    cylinder(bottom_thickness, r = inner_diameter/2 + wall_thickness);
+    cylinder(bottom_thickness, r = inner_diameter/2 + cup_thickness);
     
     difference() {
-        cylinder_tube(cup_heigth, inner_diameter/2 + wall_thickness, wall_thickness);
+        tube(h=cup_heigth, id=inner_diameter, wall=cup_thickness, anchor=BOTTOM);
         
         // "lip"
-        translate([-48, -0, cup_heigth])
-        rotate([0, -lip_degree, 0])
-        cube([plate_width*2, plate_width*2, plate_width/2], center = true);
+        up(cup_heigth/8)
+        right(inner_diameter/2)
+        fwd(inner_diameter)
+        rotate([0, -lip_degree, 90])
+        cube([cup_heigth*2, plate_width, cup_heigth]);
     }
-}
-
-module wall_mount() {
-    difference() {
-        cube([inner_diameter + wall_thickness*2, wall_thickness, wall_height]);
-
-        //holes for screws
-        translate([plate_width-screw_offset, -1, wall_height-screw_offset])
-        rotate([-90,0,0])
-        cylinder(wall_thickness+2, d = screw_diameter);
-            
-        translate([screw_offset, -1, wall_height-screw_offset])
-        rotate([-90,0,0])
-        cylinder(wall_thickness+2,d = screw_diameter);        
-    }
-}
-
-module extra2() {
-    cylinder_tube(bottom_thickness+1.5, inner_diameter/2, 1.5);
 }
