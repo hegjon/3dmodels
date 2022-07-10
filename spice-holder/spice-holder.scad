@@ -15,7 +15,7 @@ bottom_thickness = mount_thickness;
 screw_diameter = 4.65;
 screw_offset = 6.7;
 
-lip_degree = 30;
+lip_degree = 31;
 
 //private variables
 //merge the holders
@@ -58,7 +58,7 @@ module holder() {
         tube(h=cup_heigth, id=inner_diameter, wall=cup_thickness, anchor=BOTTOM);
         
         // "lip"
-        up(cup_heigth/6.6)
+        up(cup_heigth/6.0)
         right(inner_diameter/2)
         fwd(inner_diameter)
         rotate([0, -lip_degree, 90])
